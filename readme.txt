@@ -14,3 +14,11 @@ Mise en place d'un top et d'un bottom (qui doit dépasser du collider)
 Attention au layer
 Création du material physics
 Création du script grounded
+
+3- Ajout des controles
+
+Présentation des inputs
+Astuce pour gérer deux players sur le même clavier
+Réglage de la physique
+Différence update, fixed update
+

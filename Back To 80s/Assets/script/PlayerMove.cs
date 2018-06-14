@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour {
 
     [SerializeField]
-    private float moveForce = 600f;
-    [SerializeField]
-    private float maxSpeed = 10f;
+    private float maxSpeed = 20f;
     [SerializeField]
     private float jumpForce = 2000f;
+    [SerializeField]
+    private int playerNumber = 1;
 
     private bool facingRight = true;
     private bool jump = false;
@@ -18,16 +18,36 @@ public class PlayerMove : MonoBehaviour {
     private Transform top;
     private Transform bottom;
     private int groundMask;
+    private Rigidbody2D body;
 
     void Start () {
         top = transform.Find("top");
         bottom = transform.Find("bottom");
         groundMask = 1 << LayerMask.NameToLayer("Ground");
+        body = GetComponent<Rigidbody2D>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+        float hInput = GetAxis("Horizontal");
+        float hSpeed = hInput * maxSpeed;
+
+        body.velocity = new Vector2(hSpeed, body.velocity.y);
+
         grounded = Physics2D.Linecast(top.position, bottom.position, groundMask);
-        Debug.Log(grounded);
-	}
+        if (GetButton("Jump") && grounded)
+        {
+            jump = true;
+            body.AddForce(Vector2.up * jumpForce);
+        }
+    }
+
+    float GetAxis(string axisName)
+    {
+        return Input.GetAxis(axisName + playerNumber);
+    }
+
+    bool GetButton(string buttonName)
+    {
+        return Input.GetButton(buttonName + playerNumber);
+    }
 }
