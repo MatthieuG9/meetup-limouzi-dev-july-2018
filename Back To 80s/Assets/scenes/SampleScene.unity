@@ -786,6 +786,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 20
+  minSpeed: 2
   jumpForce: 180000
   playerNumber: 1
 --- !u!114 &337549544

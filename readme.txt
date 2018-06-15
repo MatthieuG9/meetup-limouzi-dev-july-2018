@@ -19,6 +19,17 @@ Création du script grounded
 
 Présentation des inputs
 Astuce pour gérer deux players sur le même clavier
+Utiliser bouton down
 Réglage de la physique
 Différence update, fixed update
+
+4- Ajout des platformers pour résoudre les problèmes de collision
+
+5- Mise en place des animations
+Création d'une machine à états
+Signaler uniquement les changements d'états
+Attention, bien configurer les transitions 
+(peuvent être interrompues + durée = 0)
+Bien connecter tous les états
+
 
