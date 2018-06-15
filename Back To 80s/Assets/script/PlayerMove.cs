@@ -19,14 +19,12 @@ public class PlayerMove : MonoBehaviour {
     private Transform bottom;
     private int groundMask;
     private Rigidbody2D body;
-    private Collider2D collider2D;
 
     void Start () {
         top = transform.Find("top");
         bottom = transform.Find("bottom");
         groundMask = 1 << LayerMask.NameToLayer("Ground");
         body = GetComponent<Rigidbody2D>();
-        collider2D = GetComponent<Collider2D>();
 	}
 	
 	void FixedUpdate () {
@@ -41,6 +39,19 @@ public class PlayerMove : MonoBehaviour {
             jump = true;
             body.AddForce(Vector2.up * jumpForce);
         }
+
+        if(hInput < 0 && facingRight || hInput > 0 && !facingRight)
+        {
+            flip();
+        }
+    }
+
+    void flip()
+    {
+        var scale = transform.localScale;
+        scale.x = -scale.x;
+        transform.localScale = scale;
+        facingRight = !facingRight;
     }
 
     float GetAxis(string axisName)
