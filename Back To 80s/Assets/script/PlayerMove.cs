@@ -34,7 +34,7 @@ public class PlayerMove : MonoBehaviour {
         body.velocity = new Vector2(hSpeed, body.velocity.y);
 
         grounded = Physics2D.Linecast(top.position, bottom.position, groundMask);
-        if (GetButton("Jump") && grounded)
+        if (GetButtonDown("Jump") && grounded)
         {
             jump = true;
             body.AddForce(Vector2.up * jumpForce);
@@ -49,5 +49,10 @@ public class PlayerMove : MonoBehaviour {
     bool GetButton(string buttonName)
     {
         return Input.GetButton(buttonName + playerNumber);
+    }
+
+    bool GetButtonDown(string buttonName)
+    {
+        return Input.GetButtonDown(buttonName + playerNumber);
     }
 }
