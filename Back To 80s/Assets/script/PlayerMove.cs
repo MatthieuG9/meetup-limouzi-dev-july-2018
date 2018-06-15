@@ -19,12 +19,14 @@ public class PlayerMove : MonoBehaviour {
     private Transform bottom;
     private int groundMask;
     private Rigidbody2D body;
+    private Collider2D collider2D;
 
     void Start () {
         top = transform.Find("top");
         bottom = transform.Find("bottom");
         groundMask = 1 << LayerMask.NameToLayer("Ground");
         body = GetComponent<Rigidbody2D>();
+        collider2D = GetComponent<Collider2D>();
 	}
 	
 	void FixedUpdate () {
