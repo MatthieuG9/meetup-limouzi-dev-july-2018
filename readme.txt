@@ -32,4 +32,12 @@ Attention, bien configurer les transitions
 (peuvent être interrompues + durée = 0)
 Bien connecter tous les états
 
+6- Détection des dégats
+Ajout d'un objet enfant
+Ajout d'un collider
+Configuration de la physique
+Mise en place du script pour appeler la méthode hit
+Ajout d'une méthode hide
 
+7- Ajout des sons
+Utilisation de broadcast message

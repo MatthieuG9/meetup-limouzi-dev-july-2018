@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum PlayerState { IDLE, RUN, JUMP, ATTACK, DEAD }
 
@@ -115,6 +116,13 @@ public class PlayerMove : MonoBehaviour {
     public void hide()
     {
         GetComponent<SpriteRenderer>().enabled = false;
+        StartCoroutine(RestartLevel());
+    }
+
+    private IEnumerator RestartLevel()
+    {
+        yield return new WaitForSeconds(3.0f);  // or however long you want it to wait
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     float GetAxis(string axisName)
