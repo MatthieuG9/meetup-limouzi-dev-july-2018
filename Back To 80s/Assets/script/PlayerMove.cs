@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum PlayerState { IDLE, RUN, JUMP }
+enum PlayerState { IDLE, RUN, JUMP, ATTACK }
 
 public class PlayerMove : MonoBehaviour {
 
@@ -15,10 +15,13 @@ public class PlayerMove : MonoBehaviour {
     private float jumpForce = 2000f;
     [SerializeField]
     private int playerNumber = 1;
+    [SerializeField]
+    private float attackDuration = 0.25f;
 
     private bool facingRight = true;
     private bool grounded = false;
     private PlayerState state = PlayerState.IDLE;
+    private float attackTimer = 0;
 
     private Transform top;
     private Transform bottom;
@@ -41,8 +44,19 @@ public class PlayerMove : MonoBehaviour {
         body.velocity = new Vector2(hSpeed, body.velocity.y);
 
         grounded = Physics2D.Linecast(top.position, bottom.position, groundMask);
-        if (grounded)
+
+        if(state == PlayerState.ATTACK && attackTimer <= Time.realtimeSinceStartup)
         {
+            setState(PlayerState.IDLE);
+        }
+
+        if (GetButtonDown("Fire"))
+        {
+            setState(PlayerState.ATTACK);
+            attackTimer = Time.realtimeSinceStartup + attackDuration;
+        }
+
+        if (grounded && state != PlayerState.ATTACK) {
             if (GetButtonDown("Jump"))
             {
                 body.AddForce(Vector2.up * jumpForce);
