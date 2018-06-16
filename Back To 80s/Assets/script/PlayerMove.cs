@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum PlayerState { IDLE, RUN, JUMP, ATTACK }
+enum PlayerState { IDLE, RUN, JUMP, ATTACK, DEAD }
 
 public class PlayerMove : MonoBehaviour {
 
@@ -17,6 +17,8 @@ public class PlayerMove : MonoBehaviour {
     private int playerNumber = 1;
     [SerializeField]
     private float attackDuration = 0.25f;
+    [SerializeField]
+    private int playerLife = 2;
 
     private bool facingRight = true;
     private bool grounded = false;
@@ -38,47 +40,51 @@ public class PlayerMove : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-        float hInput = GetAxis("Horizontal");
-        float hSpeed = hInput * maxSpeed;
-
-        body.velocity = new Vector2(hSpeed, body.velocity.y);
-
-        grounded = Physics2D.Linecast(top.position, bottom.position, groundMask);
-
-        if(state == PlayerState.ATTACK && attackTimer <= Time.realtimeSinceStartup)
+        if (state != PlayerState.DEAD)
         {
-            setState(PlayerState.IDLE);
-        }
+            float hInput = GetAxis("Horizontal");
+            float hSpeed = hInput * maxSpeed;
 
-        if (GetButtonDown("Fire"))
-        {
-            setState(PlayerState.ATTACK);
-            attackTimer = Time.realtimeSinceStartup + attackDuration;
-        }
+            body.velocity = new Vector2(hSpeed, body.velocity.y);
 
-        if (grounded && state != PlayerState.ATTACK) {
-            if (GetButtonDown("Jump"))
-            {
-                body.AddForce(Vector2.up * jumpForce);
-                setState(PlayerState.JUMP);
-            }
-            else if (Mathf.Abs(body.velocity.x) > minSpeed)
-            {
-                setState(PlayerState.RUN);
-            }
-            else 
+            grounded = Physics2D.Linecast(top.position, bottom.position, groundMask);
+
+            if (state == PlayerState.ATTACK && attackTimer <= Time.realtimeSinceStartup)
             {
                 setState(PlayerState.IDLE);
             }
-        }
 
-        if(hInput < 0 && facingRight || hInput > 0 && !facingRight)
-        {
-            flip();
+            if (GetButtonDown("Fire"))
+            {
+                setState(PlayerState.ATTACK);
+                attackTimer = Time.realtimeSinceStartup + attackDuration;
+            }
+
+            if (grounded && state != PlayerState.ATTACK)
+            {
+                if (GetButtonDown("Jump"))
+                {
+                    body.AddForce(Vector2.up * jumpForce);
+                    setState(PlayerState.JUMP);
+                }
+                else if (Mathf.Abs(body.velocity.x) > minSpeed)
+                {
+                    setState(PlayerState.RUN);
+                }
+                else
+                {
+                    setState(PlayerState.IDLE);
+                }
+            }
+
+            if (hInput < 0 && facingRight || hInput > 0 && !facingRight)
+            {
+                flip();
+            }
         }
     }
 
-    private void setState(PlayerState state)
+    void setState(PlayerState state)
     {
         if (state != this.state)
         {
@@ -93,6 +99,20 @@ public class PlayerMove : MonoBehaviour {
         scale.x = -scale.x;
         transform.localScale = scale;
         facingRight = !facingRight;
+    }
+
+    public void hit()
+    {
+        playerLife--;
+        if(playerLife <= 0)
+        {
+            setState(PlayerState.DEAD);
+        }
+    }
+
+    public void hide()
+    {
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 
     float GetAxis(string axisName)
