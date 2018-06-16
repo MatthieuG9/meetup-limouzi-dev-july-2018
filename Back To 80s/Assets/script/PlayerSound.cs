@@ -6,6 +6,10 @@ public class PlayerSound : MonoBehaviour {
 
     [SerializeField]
     private AudioClip[] attack;
+    [SerializeField]
+    private AudioClip[] hit;
+    [SerializeField]
+    private AudioClip[] dead;
 
     private new AudioSource audio;
 
@@ -19,6 +23,12 @@ public class PlayerSound : MonoBehaviour {
         if(type == "attack")
         {
             PlayRandomSound(attack);
+        }else if(type == "hit")
+        {
+            PlayRandomSound(hit);
+        }else if(type == "dead")
+        {
+            PlayRandomSound(dead);
         }
     }
 

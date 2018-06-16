@@ -19,7 +19,7 @@ public class PlayerMove : MonoBehaviour {
     [SerializeField]
     private float attackDuration = 0.25f;
     [SerializeField]
-    private int playerLife = 2;
+    private int playerLife = 3;
 
     private bool facingRight = true;
     private bool grounded = false;
@@ -31,6 +31,7 @@ public class PlayerMove : MonoBehaviour {
     private int groundMask;
     private Rigidbody2D body;
     private Animator animator;
+    private ParticleSystem particle;
 
     void Start () {
         top = transform.Find("top");
@@ -38,6 +39,7 @@ public class PlayerMove : MonoBehaviour {
         groundMask = 1 << LayerMask.NameToLayer("Ground");
         body = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        particle = GetComponentInChildren<ParticleSystem>();
 	}
 	
 	void FixedUpdate () {
@@ -87,13 +89,13 @@ public class PlayerMove : MonoBehaviour {
 
     void setState(PlayerState state)
     {
+        var trigger = state.ToString().ToLowerInvariant();
         if (state != this.state)
         {
             this.state = state;
-            var trigger = state.ToString().ToLowerInvariant();
-            animator.SetTrigger(trigger);
-            BroadcastMessage("PlaySound", trigger);
+            animator.SetTrigger(trigger); 
         }
+        BroadcastMessage("PlaySound", trigger);
     }
 
     void flip()
@@ -106,10 +108,20 @@ public class PlayerMove : MonoBehaviour {
 
     public void hit()
     {
-        playerLife--;
-        if(playerLife <= 0)
+        if (state != PlayerState.DEAD)
         {
-            setState(PlayerState.DEAD);
+            playerLife--;
+            if (playerLife <= 0)
+            {
+                setState(PlayerState.DEAD);
+            }
+            else
+            {
+                BroadcastMessage("PlaySound", "hit");
+            }
+            var main = particle.main;
+            main.loop = false;
+            particle.Play();
         }
     }
 
