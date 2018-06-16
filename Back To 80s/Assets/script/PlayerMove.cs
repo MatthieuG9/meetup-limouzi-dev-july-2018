@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum PlayerState { IDLE, RUN, JUMP, ATTACK, DEAD }
+public enum PlayerState { IDLE, RUN, JUMP, ATTACK, DEAD }
 
 public class PlayerMove : MonoBehaviour {
 
@@ -89,7 +89,9 @@ public class PlayerMove : MonoBehaviour {
         if (state != this.state)
         {
             this.state = state;
-            animator.SetTrigger(state.ToString().ToLowerInvariant());
+            var trigger = state.ToString().ToLowerInvariant();
+            animator.SetTrigger(trigger);
+            BroadcastMessage("PlaySound", trigger);
         }
     }
 
