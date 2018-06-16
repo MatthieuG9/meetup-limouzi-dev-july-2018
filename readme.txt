@@ -39,5 +39,11 @@ Configuration de la physique
 Mise en place du script pour appeler la méthode hit
 Ajout d'une méthode hide
 
-7- Ajout des sons
+7- Ajout des effets de particules
+Simulation space
+Emission
+Taille et couleur over lifetime
+
+8- Ajout des sons
 Utilisation de broadcast message
+Sons d'ambiance
