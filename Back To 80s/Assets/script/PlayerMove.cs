@@ -38,6 +38,8 @@ public class PlayerMove : MonoBehaviour {
         bottom = transform.Find("bottom");
         groundMask = 1 << LayerMask.NameToLayer("Ground");
         body = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        particle = GetComponentInChildren<ParticleSystem>();
 	}
 	
 	void FixedUpdate () {
@@ -48,17 +50,47 @@ public class PlayerMove : MonoBehaviour {
 
         grounded = Physics2D.Linecast(top.position, bottom.position, groundMask);
 
-        if (grounded)
+        if (state == PlayerState.ATTACK && attackTimer <= Time.realtimeSinceStartup)
+        {
+            setState(PlayerState.IDLE);
+        }
+
+        if (GetButtonDown("Fire"))
+        {
+            setState(PlayerState.ATTACK);
+            attackTimer = Time.realtimeSinceStartup + attackDuration;
+        }
+
+        if (grounded && state != PlayerState.ATTACK)
         {
             if (GetButtonDown("Jump"))
             {
                 body.AddForce(Vector2.up * jumpForce);
+                setState(PlayerState.JUMP);
+            }
+            else if (Mathf.Abs(body.velocity.x) > minSpeed)
+            {
+                setState(PlayerState.RUN);
+            }
+            else
+            {
+                setState(PlayerState.IDLE);
             }
         }
 
         if (hInput < 0 && facingRight || hInput > 0 && !facingRight)
         {
             flip();
+        }
+    }
+
+    void setState(PlayerState state)
+    {
+        var trigger = state.ToString().ToLowerInvariant();
+        if (state != this.state)
+        {
+            this.state = state;
+            animator.SetTrigger(trigger); 
         }
     }
 
