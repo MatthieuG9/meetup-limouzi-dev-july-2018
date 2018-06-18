@@ -34,10 +34,54 @@ public class PlayerMove : MonoBehaviour {
     private ParticleSystem particle;
 
     void Start () {
-
+        top = transform.Find("top");
+        bottom = transform.Find("bottom");
+        groundMask = 1 << LayerMask.NameToLayer("Ground");
+        body = GetComponent<Rigidbody2D>();
 	}
 	
 	void FixedUpdate () {
-      
+        float hInput = GetAxis("Horizontal");
+        float hSpeed = hInput * maxSpeed;
+
+        body.velocity = new Vector2(hSpeed, body.velocity.y);
+
+        grounded = Physics2D.Linecast(top.position, bottom.position, groundMask);
+
+        if (grounded)
+        {
+            if (GetButtonDown("Jump"))
+            {
+                body.AddForce(Vector2.up * jumpForce);
+            }
+        }
+
+        if (hInput < 0 && facingRight || hInput > 0 && !facingRight)
+        {
+            flip();
+        }
+    }
+
+    void flip()
+    {
+        var scale = transform.localScale;
+        scale.x = -scale.x;
+        transform.localScale = scale;
+        facingRight = !facingRight;
+    }
+
+    float GetAxis(string axisName)
+    {
+        return Input.GetAxis(axisName + playerNumber);
+    }
+
+    bool GetButton(string buttonName)
+    {
+        return Input.GetButton(buttonName + playerNumber);
+    }
+
+    bool GetButtonDown(string buttonName)
+    {
+        return Input.GetButtonDown(buttonName + playerNumber);
     }
 }
