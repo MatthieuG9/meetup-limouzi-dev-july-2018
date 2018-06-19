@@ -54,6 +54,14 @@
 				border: none;
 				box-shadow: none;
 			}
+
+			.reveal .source {
+				font-size: 0.35em;
+				color: #838383;
+			}
+			.reveal .source a {
+				color: #838383;
+			}
 		</style>
 
 		<!--[if lt IE 9]>
@@ -81,9 +89,9 @@
 				<section>
 					<h2>Pourquoi Unity 3D ?</h2>
 					<ul>
-						<li>Un éditeur</li>
-						<li>Prototypage rapide</li>
-						<li>Une grande communauté</li>
+						<li class="fragment fade-up">Un éditeur (extensible)</li>
+						<li class="fragment fade-up">Prototypage rapide</li>
+						<li class="fragment fade-up">Une grande communauté</li>
 					</ul>
 				</section>
 
@@ -98,16 +106,55 @@
 						<img src="images/unity-editor.jpg"/>
 					</section>
 					<section>
-						<h2>Mise en place du projet</h2>
+						<h3>Mise en place du projet</h3>
 						<ul>
-							<li>Configuration des paramètres</li>
-							<li>Importer les assets</li>
-							<li>Création d'une scène avec un décor</li>
-							<li>Mise en place des layers</li>
+							<li class="fragment fade-up">Configuration des paramètres</li>
+							<li class="fragment fade-up">Importer les assets</li>
+							<li class="fragment fade-up">Création d'une scène avec un décor</li>
+							<li class="fragment fade-up">Mise en place des layers</li>
 						</ul>
 					</section>
 					<section>
-						<h2>Mise en place du projet</h2>
+						<h3>Mise en place du projet</h3>
+						<p><small>Démo</small></p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Physique 2D</h2>
+						<img src="images/unity-physic.jpg"/>
+						<div class="source">source : 
+						<a href="https://docs.unity3d.com/Manual/PhysicsSection.html">https://docs.unity3d.com/Manual/PhysicsSection.html</a>
+						</div>
+					</section>
+					<section>
+						<h3>Colliders</h3>
+						<ul>
+							<li class="fragment fade-up">Formes géométriques simples</li>
+							<li class="fragment fade-up">Utiliser par la physique ET la GUI</li>
+							<li class="fragment fade-up">Colliders 2D et 3D sont incompatibles</li>
+							<li class="fragment fade-up">Optimisation : limiter le nombre au maximum et utiliser les masques binaires</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Rigidbody</h3>
+						<ul>
+							<li class="fragment fade-up">Un objet qui reçoit des forces</li>
+							<li class="fragment fade-up">Une masse et une gravité</li>
+							<li class="fragment fade-up">Frictions et contraintes</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Conseils</h3>
+						<ul>
+							<li class="fragment fade-up">Utiliser des masses réalistes</li>
+							<li class="fragment fade-up">Modifier la gravité en début de projet</li>
+							<li class="fragment fade-up">Ne pas chercher à reproduire une physique réaliste</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Physique 2D</h3>
 						<p><small>Démo</small></p>
 					</section>
 				</section>
