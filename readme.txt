@@ -47,3 +47,14 @@ Taille et couleur over lifetime
 8- Ajout des sons
 Utilisation de broadcast message
 Sons d'ambiance
+
+
+Le thème de la seconde partie du meetup sera la découverte de Unity et du développement de jeux vidéos en général. 
+Les bases du développement de jeux vidéos seront présentées à travers la création d'un platformer 2D ambiance rétro gaming :
+- Mise en place du décor.
+- Gestion des collisions et de la physique.
+- Contrôle d'un personnage et éléments de gameplay.
+- Création des animations.
+- Ajout des effets sonores et des effets de particules.
+
+
