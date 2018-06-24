@@ -33,6 +33,14 @@ public class PlayerMove : MonoBehaviour {
     private Animator animator;
     private ParticleSystem particle;
 
+    public int PlayerLife
+    {
+        get
+        {
+            return playerLife;
+        }
+    }
+
     void Start () {
         top = transform.Find("top");
         bottom = transform.Find("bottom");
